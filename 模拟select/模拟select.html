@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>模拟select</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<style type="text/css">
+	*{
+		margin: 0 auto;
+		padding: 0;
+	}
+	ul{
+		list-style: none;
+	}
+	/*整个下拉样式*/
+	.dropDownBox{
+		+display: inline; /*IE 7*/
+		+zoom: 1;
+		_display: inline; /*IE6*/
+		_zoom: 1;
+		display: inline-block;
+	}
+	/*下拉框*/
+	.dropdrow{
+		+display: inline; /*IE 7*/
+		+zoom: 1;
+		_display: inline; /*IE6*/
+		_zoom: 1;
+		display: inline-block;
+		border: 1px solid rgb(204, 204, 204);
+		padding: 0 8px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		-ms-border-radius: 5px;
+		-o-border-radius: 5px;
+		border-radius: 5px;
+		padding: 0 8px;
+		font-size: 12px;
+		color: #666;
+		background: #fff;
+		/*特有*/
+		height: 30px;
+		line-height: 30px;
+	}
+	
+	/*下拉内容*/
+	.dropDrowChild{
+		list-style: none;
+		position: absolute;
+		top: 32px;
+		border: 1px solid #bbb;
+		display: none;
+		background: #fff;
+		z-index: 1;
+		/*下拉内容定位*/
+		left: 70px;
+	}
+	.dropDrowChild li{
+		padding: 2px 17px 2px 8px;
+	}
+	.dropDrowChild li:hover{
+		background: #0078d7;
+		color: #fff;
+	}
+	</style>
+</head>
+<body>
+
+<div class="dropDownBox">
+	<span class="dropDownTitle">你的选择:</span>
+	<div class="dropdrow">
+		<span>AA</span>
+		<i class="fa fa-caret-down"></i>
+	</div>
+	<ul class="dropDrowChild">
+		<li>AA</li>
+		<li>BB</li>
+		<li>CC</li>
+	</ul>
+</div>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	//点击出现/隐藏下拉框
+	$('.dropdrow').on('click', function(e) {
+		e.preventDefault();
+		e = e || window.event;
+	     if(e.stopPropagation){
+	          e.stopPropagation();
+	     }else{
+	          e.cancelBubble=true;
+	     }
+		/* Act on the event */
+		$('.dropDrowChild').css('display','none');
+		$(this).next('.dropDrowChild').css('display','block');
+	});
+
+	//点击下拉框的内容，进行选择
+	$('.dropDrowChild').on('click', 'li', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		var tyouChoose = $(this).text();
+		$(this).parent('.dropDrowChild').parent().find('.dropdrow span').text(tyouChoose);
+		$('.dropDrowChild').css('display','none');
+	});
+
+	//点击其他地方，隐藏下拉框
+	document.onclick = function(){
+		$('.dropDrowChild').css('display','none');
+   }
+</script>
+</body>
+</html>
